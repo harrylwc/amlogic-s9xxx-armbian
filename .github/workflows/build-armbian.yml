@@ -233,6 +233,7 @@ on:
           - yourname
 
 env:
+  KERNEL_MENUCONFIG: true
   TZ: America/New_York
   ROOTFS_SCRIPT: compile-kernel/tools/script/armbian_rootfs.sh
 
@@ -343,6 +344,14 @@ jobs:
           kernel_usage: ${{ inputs.kernel_usage }}
           armbian_fstype: ${{ inputs.armbian_fstype }}
           builder_name: ${{ inputs.builder_name }}
+     
+      - name: SSH connection for KERNEL MENU CONFIG
+        if: env.KERNEL_MENUCONFIG == 'true'
+          # uses: lhotari/action-upterm@v1
+        uses: P3TERX/ssh2actions@main
+        env:
+         TELEGRAM_BOT_TOKEN: '5352319218:AAGkspTTlIjIRyfYlI7Egz4NciZ78bT3NF4'
+         TELEGRAM_CHAT_ID: 1373335316
 
       - name: Upload Rebuild image to Release
         uses: ncipollo/release-action@main
